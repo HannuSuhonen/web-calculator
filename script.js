@@ -1,6 +1,7 @@
-let operator;
+let operator = "";
 let firstNumber = "";
 let secondNumber = "";
+let negativeFirstNumber = false;
 
 function add(a,b){
     return a + b;
@@ -16,44 +17,69 @@ function divide(a,b){
 }
 
 function operate(operator,firstNumber,secondNumber){
+    let result;
     switch (operator) {
         case "+":
-            return add(firstNumber,secondNumber);
+            result = add(firstNumber,secondNumber);
+            break;
         case "-":
-            return subtract(firstNumber,secondNumber);
+            result = subtract(firstNumber,secondNumber);
+            break;
         case "*":
-            return multiply(firstNumber,secondNumber);
+            result = multiply(firstNumber,secondNumber);
+            break;
         case "/":
-            return divide(firstNumber,secondNumber);
+            result = divide(firstNumber,secondNumber);
+            break;
         default:
             console.log("error");
       }
-      
+    return result;
 }
 
-const displayNumber = document.querySelector(".display-number");
+const displayText = document.querySelector(".display-text");
 const numberButtons = document.querySelectorAll(".number-button");
 const operatebuttons = document.querySelectorAll(".operate-button");
 const equalButton = document.querySelector(".equals-button");
+const cButton = document.querySelector(".c-button");
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        displayNumber.textContent += button.textContent;
+        displayText.textContent += button.textContent
+        if(operator === ""){
+            firstNumber = displayText.textContent;
+        }else{
+            secondNumber = displayText.textContent;
+        }
+        console.log("firstnumber: " + firstNumber);
+        console.log("secondnumber: " + secondNumber);
     });
 })
 
 operatebuttons.forEach((button) => {
-    button.addEventListener("click", () => {
-        operator = button.textContent;
-        firstNumber = parseInt(displayNumber.textContent)
-        displayNumber.textContent = "0";
+    button.addEventListener("click", (e) => {
+        if(button.textContent === "-" && firstNumber === ""){
+            negativeFirstNumber = true;
+        }else{
+            operator = button.textContent;
+            displayText.textContent = "";
+        }
     });
+
 })
 
+function checkPrependOperation(){
+
+}
+
 equalButton.addEventListener(("click"), () => {
-    secondNumber = parseInt(displayNumber.textContent);
-    displayNumber.textContent = operate(operator,firstNumber,secondNumber)
-    console.log(operator);
-    console.log(firstNumber);
-    console.log(secondNumber);
+    firstNumber = negativeFirstNumber ? "-" + firstNumber : firstNumber;
+    displayText.textContent = operate(operator,parseInt(firstNumber),parseInt(secondNumber))
+});
+
+cButton.addEventListener(("click"), () => {
+    displayText.textContent = "";
+    firstNumber = "";
+    secondNumber = "";
+    operator = "";
 });
