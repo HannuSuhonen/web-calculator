@@ -4,9 +4,11 @@ let secondNumber = "";
 let negativeFirstNumber = false;
 
 function add(a,b){
+    console.log(a,b);
     return a + b;
 }
 function subtract(a,b){
+    console.log(a,b);
     return a - b;
 }
 function multiply(a,b){
@@ -17,19 +19,22 @@ function divide(a,b){
 }
 
 function operate(operator,firstNumber,secondNumber){
+    firstNumber = negativeFirstNumber ? "-" + firstNumber : firstNumber;
+    let parsedFirstNumber = parseInt(firstNumber);
+    let parsedSecondNumber = parseInt(secondNumber);
     let result;
     switch (operator) {
         case "+":
-            result = add(firstNumber,secondNumber);
+            result = add(parsedFirstNumber,parsedSecondNumber);
             break;
         case "-":
-            result = subtract(firstNumber,secondNumber);
+            result = subtract(parsedFirstNumber,parsedSecondNumber);
             break;
         case "*":
-            result = multiply(firstNumber,secondNumber);
+            result = multiply(parsedFirstNumber,parsedSecondNumber);
             break;
         case "/":
-            result = divide(firstNumber,secondNumber);
+            result = divide(parsedFirstNumber,parsedSecondNumber);
             break;
         default:
             console.log("error");
@@ -45,16 +50,19 @@ const cButton = document.querySelector(".c-button");
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
-        displayText.textContent += button.textContent
+        let displayValue;
         if(operator === ""){
-            firstNumber = displayText.textContent;
+            firstNumber += button.textContent;
+            displayValue = firstNumber;
         }else{
-            secondNumber = displayText.textContent;
+            secondNumber += button.textContent;
+            displayValue = secondNumber;
         }
+        displayText.textContent = displayValue;
         console.log("firstnumber: " + firstNumber);
         console.log("secondnumber: " + secondNumber);
     });
-})
+});
 
 operatebuttons.forEach((button) => {
     button.addEventListener("click", (e) => {
@@ -65,16 +73,10 @@ operatebuttons.forEach((button) => {
             displayText.textContent = "";
         }
     });
-
-})
-
-function checkPrependOperation(){
-
-}
+});
 
 equalButton.addEventListener(("click"), () => {
-    firstNumber = negativeFirstNumber ? "-" + firstNumber : firstNumber;
-    displayText.textContent = operate(operator,parseInt(firstNumber),parseInt(secondNumber))
+    displayText.textContent = operate(operator,firstNumber,secondNumber)
 });
 
 cButton.addEventListener(("click"), () => {
@@ -82,4 +84,5 @@ cButton.addEventListener(("click"), () => {
     firstNumber = "";
     secondNumber = "";
     operator = "";
+    negativeFirstNumber = false;
 });
