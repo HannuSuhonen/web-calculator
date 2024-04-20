@@ -40,6 +40,7 @@ function operate(operator,firstNumber,secondNumber){
         default:
             console.log("error");
       }
+      negativeFirstNumber = false;
       firstNumberGlobal = result;
     return result;
 }
