@@ -73,6 +73,7 @@ operatebuttons.forEach((button) => {
             negativeFirstNumber = true;
         }else if(firstNumberGlobal != "" && secondNumber != ""){
             subsequentOperation = true;
+            operator = button.textContent;
             secondNumber = "";
             displayText.textContent = "";
 
