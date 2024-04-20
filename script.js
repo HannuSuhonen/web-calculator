@@ -1,7 +1,8 @@
 let operator = "";
-let firstNumber = "";
+let firstNumberGlobal = "";
 let secondNumber = "";
 let negativeFirstNumber = false;
+let subsequentOperation = false;
 
 function add(a,b){
     console.log(a,b);
@@ -39,6 +40,7 @@ function operate(operator,firstNumber,secondNumber){
         default:
             console.log("error");
       }
+      firstNumberGlobal = result;
     return result;
 }
 
@@ -51,24 +53,32 @@ const cButton = document.querySelector(".c-button");
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
         let displayValue;
-        if(operator === ""){
-            firstNumber += button.textContent;
-            displayValue = firstNumber;
+        if(operator === "" && subsequentOperation === false){
+            firstNumberGlobal += button.textContent;
+            displayValue = firstNumberGlobal;
         }else{
             secondNumber += button.textContent;
             displayValue = secondNumber;
+            subsequentOperation = false;
         }
         displayText.textContent = displayValue;
-        console.log("firstnumber: " + firstNumber);
+        console.log("firstnumber: " + firstNumberGlobal);
         console.log("secondnumber: " + secondNumber);
     });
 });
 
 operatebuttons.forEach((button) => {
     button.addEventListener("click", (e) => {
-        if(button.textContent === "-" && firstNumber === ""){
+        if(button.textContent === "-" && firstNumberGlobal === ""){
             negativeFirstNumber = true;
+        }else if(firstNumberGlobal != "" && secondNumber != ""){
+            subsequentOperation = true;
+            secondNumber = "";
+            displayText.textContent = "";
+
+            console.log("subsequent operation!");
         }else{
+            console.log("this run");
             operator = button.textContent;
             displayText.textContent = "";
         }
@@ -76,12 +86,13 @@ operatebuttons.forEach((button) => {
 });
 
 equalButton.addEventListener(("click"), () => {
-    displayText.textContent = operate(operator,firstNumber,secondNumber)
+    displayText.textContent = operate(operator,firstNumberGlobal,secondNumber)
+    console.log(firstNumberGlobal);
 });
 
 cButton.addEventListener(("click"), () => {
     displayText.textContent = "";
-    firstNumber = "";
+    firstNumberGlobal = "";
     secondNumber = "";
     operator = "";
     negativeFirstNumber = false;
