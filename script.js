@@ -72,17 +72,17 @@ operatebuttons.forEach((button) => {
     button.addEventListener("click", (e) => {
         if(button.textContent === "-" && firstNumberGlobal === ""){
             negativeFirstNumber = true;
+            // displayText.textContent = `-${firstNumberGlobal}`;
         }else if(firstNumberGlobal != "" && secondNumber != ""){
             subsequentOperation = true;
             operator = button.textContent;
             secondNumber = "";
-            displayText.textContent = "";
-
-            console.log("subsequent operation!");
         }else{
             console.log("this run");
             operator = button.textContent;
-            displayText.textContent = "";
+            if(negativeFirstNumber){
+                displayText.textContent = `-${firstNumberGlobal}`
+            }
         }
     });
 });
