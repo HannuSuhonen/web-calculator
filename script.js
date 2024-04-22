@@ -78,7 +78,6 @@ operatebuttons.forEach((button) => {
             operator = button.textContent;
             secondNumber = "";
         }else{
-            console.log("this run");
             operator = button.textContent;
             if(negativeFirstNumber){
                 displayText.textContent = `-${firstNumberGlobal}`
