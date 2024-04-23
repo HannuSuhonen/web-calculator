@@ -89,10 +89,12 @@ operatebuttons.forEach((button) => {
         //     console.log("continuation")
         // }
         else{
-            operator = button.textContent === "X" ? "*" : button.textContent;
+            if(displayText.textContent != ""){
+                operator = button.textContent === "X" ? "*" : button.textContent;
+            }
 
             // operator = button.textContent;
-            if(negativeFirstNumber){
+            if(negativeFirstNumber && firstNumberGlobal != ""){
                 displayText.textContent = `-${firstNumberGlobal}`
             }
         }
