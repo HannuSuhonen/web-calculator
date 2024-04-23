@@ -65,24 +65,38 @@ numberButtons.forEach((button) => {
         displayText.textContent = displayValue;
         console.log("firstnumber: " + firstNumberGlobal);
         console.log("secondnumber: " + secondNumber);
+        unpressOperateButtons();
     });
 });
 
 operatebuttons.forEach((button) => {
     button.addEventListener("click", (e) => {
+        unpressOperateButtons();
+        button.classList.add("button-pressed");
         if(button.textContent === "-" && firstNumberGlobal === ""){
             negativeFirstNumber = true;
             // displayText.textContent = `-${firstNumberGlobal}`;
         }else if(firstNumberGlobal != "" && secondNumber != ""){
             subsequentOperation = true;
-            operator = button.textContent;
+            operator = button.textContent === "X" ? "*" : button.textContent;
+
+            // operator = button.textContent;
             secondNumber = "";
-        }else{
-            operator = button.textContent;
+        }
+        // else if(firstNumberGlobal != "" && displayText.textContent != "" && operator != ""){
+        //     displayText.textContent = operate(operator,firstNumberGlobal,parseInt(displayText.textContent));
+        //     operator = button.textContent;
+        //     console.log("continuation")
+        // }
+        else{
+            operator = button.textContent === "X" ? "*" : button.textContent;
+
+            // operator = button.textContent;
             if(negativeFirstNumber){
                 displayText.textContent = `-${firstNumberGlobal}`
             }
         }
+
     });
 });
 
@@ -97,4 +111,9 @@ cButton.addEventListener(("click"), () => {
     secondNumber = "";
     operator = "";
     negativeFirstNumber = false;
+    unpressOperateButtons();
 });
+
+function unpressOperateButtons(){
+    operatebuttons.forEach((button) => button.classList.remove("button-pressed"));
+}
